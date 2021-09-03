@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-function koneksi
-=======
 <?php
 // koneksi database
 $server = "localhost";
@@ -31,27 +28,9 @@ function tambah($data)
     $jk = htmlspecialchars($data['jenis_kelamin']);
     $mapel = htmlspecialchars($data['mapel']);
     $keterangan = htmlspecialchars($data['keterangan']);
-    // var_dump($tanggal);
-    // var_dump($nisn);
-    // var_dump($kelas);
-    // var_dump($nama);
-    // var_dump($noabsen);
-    // var_dump($jk);
-    // var_dump($mapel);
-    // var_dump($keterangan);
-    // die;
+
     $query = "INSERT INTO no_absen_17 VALUES('','$keterangan','$tanggal','$nisn','$nama','$kelas','$mapel','$noabsen','$jk')";
-    // mysqli_query($koneksi, "INSERT INTO no_absen_17 VALUES(
-    //                 '',
-    //                 $keterangan,
-    //                 $tanggal,
-    //                 $nisn,
-    //                 $nama,
-    //                 $kelas,
-    //                 $mapel,
-    //                 $noabsen,
-    //                 $jk
-    // )" or die(mysqli_error($koneksi)));
+
 
     mysqli_query($koneksi, $query);
     return mysqli_affected_rows($koneksi);
@@ -75,16 +54,7 @@ function edit($data)
     $jk = htmlspecialchars($data['jenis_kelamin']);
     $mapel = htmlspecialchars($data['mapel']);
     $keterangan = htmlspecialchars($data['keterangan']);
-    // var_dump($id_absen);
-    // var_dump($tanggal);
-    // var_dump($nisn);
-    // var_dump($kelas);
-    // var_dump($nama);
-    // var_dump($noabsen);
-    // var_dump($jk);
-    // var_dump($mapel);
-    // var_dump($keterangan);
-    // die;
+
     $query = "UPDATE no_absen_17 SET
                 keterangan = '$keterangan',
                 tanggal = '$tanggal',
@@ -101,4 +71,3 @@ function edit($data)
 
     return mysqli_affected_rows($koneksi);
 }
->>>>>>> 33c28ef0349eeda19ec70bd987eb0f67bd17a6ee
