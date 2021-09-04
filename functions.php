@@ -20,14 +20,14 @@ function tambah($data)
 {
     global $koneksi;
 
-    $tanggal = htmlspecialchars($data['tanggal']);
-    $nisn = htmlspecialchars($data['nisn']);
-    $kelas = htmlspecialchars($data['kelas']);
-    $nama = htmlspecialchars($data['nama_siswa']);
-    $noabsen = htmlspecialchars($data['no_urut_absen']);
-    $jk = htmlspecialchars($data['jenis_kelamin']);
-    $mapel = htmlspecialchars($data['mapel']);
-    $keterangan = htmlspecialchars($data['keterangan']);
+    $tanggal = htmlspecialchars(strip_tags($data['tanggal']));
+    $nisn = htmlspecialchars(strip_tags($data['nisn']));
+    $kelas = htmlspecialchars(strip_tags($data['kelas']));
+    $nama = htmlspecialchars(strip_tags($data['nama_siswa']));
+    $noabsen = htmlspecialchars(strip_tags($data['no_urut_absen']));
+    $jk = htmlspecialchars(strip_tags($data['jenis_kelamin']));
+    $mapel = htmlspecialchars(strip_tags($data['mapel']));
+    $keterangan = htmlspecialchars(strip_tags($data['keterangan']));
 
     $query = "INSERT INTO no_absen_17 VALUES('','$keterangan','$tanggal','$nisn','$nama','$kelas','$mapel','$noabsen','$jk')";
 
@@ -46,14 +46,14 @@ function edit($data)
 {
     global $koneksi;
     $id_absen = $data['id_absen'];
-    $tanggal = htmlspecialchars($data['tanggal']);
-    $nisn = htmlspecialchars($data['nisn']);
-    $kelas = htmlspecialchars($data['kelas']);
-    $nama = htmlspecialchars($data['nama_siswa']);
-    $noabsen = htmlspecialchars($data['no_urut_absen']);
-    $jk = htmlspecialchars($data['jenis_kelamin']);
-    $mapel = htmlspecialchars($data['mapel']);
-    $keterangan = htmlspecialchars($data['keterangan']);
+    $tanggal = htmlspecialchars(strip_tags($data['tanggal']));
+    $nisn = htmlspecialchars(strip_tags($data['nisn']));
+    $kelas = htmlspecialchars(strip_tags($data['kelas']));
+    $nama = htmlspecialchars(strip_tags($data['nama_siswa']));
+    $noabsen = htmlspecialchars(strip_tags($data['no_urut_absen']));
+    $jk = htmlspecialchars(strip_tags($data['jenis_kelamin']));
+    $mapel = htmlspecialchars(strip_tags($data['mapel']));
+    $keterangan = htmlspecialchars(strip_tags($data['keterangan']));
 
     $query = "UPDATE no_absen_17 SET
                 keterangan = '$keterangan',
