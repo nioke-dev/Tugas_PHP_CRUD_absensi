@@ -1,194 +1,223 @@
-<?php
-require "functions.php";
-
-date_default_timezone_set('Asia/Jakarta');
-$tgl = date('Y-m-d H:i:s');
-
-$siswa = query("SELECT * FROM no_absen_17");
-
-if (isset($_POST['submit'])) {
-    if (tambah($_POST) > 0) {
-        echo "<script>
-                alert('data berhasil ditambahkan!');
-                document.location.href='index.php';
-        </script>";
-    } else {
-        echo "<script>
-                alert('Data Gagal Ditambahkan');
-                document.location.href='index.php';
-            </script>";
-        die;
-    }
-}
-if (isset($_POST['cari'])) {
-    $siswa = cari($_POST['keyword']);
-}
-?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Absensi Siswa</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <!-- Custom fonts for this template-->
+    <!-- Link FontAwesome -->
     <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <title>Login Pages</title>
 
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background: linear-gradient(to right, #b92b27, #1565c0)
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: none
+        }
+
+        .box {
+            width: 500px;
+            padding: 40px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: #191919;
+            ;
+            text-align: center;
+            transition: 0.25s;
+            margin-top: 100px;
+            border-radius: 20px;
+        }
+
+        .box input[type="text"],
+        .box input[type="password"] {
+            border: 0;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: 10px 10px;
+            width: 250px;
+            outline: none;
+            color: white;
+            border-radius: 24px;
+            transition: 0.25s
+        }
+
+        .box h1 {
+            color: white;
+            text-transform: uppercase;
+            font-weight: 500
+        }
+
+        .box input[type="text"]:focus,
+        .box input[type="password"]:focus {
+            width: 300px;
+            border-color: #2ecc71
+        }
+
+        .box input[type="submit"] {
+            border: 0;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            border: 2px solid #2ecc71;
+            padding: 14px 40px;
+            outline: none;
+            color: white;
+            border-radius: 24px;
+            transition: 0.25s;
+            cursor: pointer
+        }
+
+        .box input[type="submit"]:hover {
+            background: #2ecc71
+        }
+
+        .forgot {
+            text-decoration: underline
+        }
+
+        ul.social-network {
+            list-style: none;
+            display: inline;
+            margin-left: 0 !important;
+            padding: 0
+        }
+
+        ul.social-network li {
+            display: inline;
+            margin: 0 5px
+        }
+
+        .social-network a.icoFacebook:hover {
+            background-color: #3B5998
+        }
+
+        .social-network a.icoTwitter:hover {
+            background-color: #33ccff
+        }
+
+        .social-network a.icoGoogle:hover {
+            background-color: #BD3518
+        }
+
+        .social-network a.icoFacebook:hover i,
+        .social-network a.icoTwitter:hover i,
+        .social-network a.icoGoogle:hover i {
+            color: #fff
+        }
+
+        a.socialIcon:hover,
+        .socialHoverClass {
+            color: #44BCDD
+        }
+
+        .social-circle li a {
+            display: inline-block;
+            position: relative;
+            margin: 0 auto 0 auto;
+            border-radius: 50%;
+            text-align: center;
+            width: 50px;
+            height: 50px;
+            font-size: 20px
+        }
+
+        .social-circle li i {
+            margin: 0;
+            line-height: 50px;
+            text-align: center
+        }
+
+        .social-circle li a:hover i,
+        .triggeredHover {
+            transform: rotate(360deg);
+            transition: all 0.2s
+        }
+
+        .social-circle i {
+            color: #fff;
+            transition: all 0.8s;
+            transition: all 0.8s
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-success">
+<body>
+    <?php
+    if (isset($_GET['pesan'])) {
+        if ($_GET['pesan'] == "gagal") {
+            echo "<script>
+                alert('Login gagal! Username dan Password salah!');
+                document.location.href='index.php';
+            </script>";
+        } elseif ($_GET['pesan'] == "logout") {
+            echo "<script>
+                alert('Anda Telah Berhasil Logout');
+                document.location.href='index.php';
+            </script>";
+        } elseif ($_GET['pesan'] == "belum_login") {
+            echo "<script>
+                alert('Anda Harus Login Untuk Mengakses Halaman Admin');
+                document.location.href='index.php';
+            </script>";
+        }
+    }
+    ?>
+
+
 
     <div class="container">
-        <br>
         <div class="row">
-            <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
-            <div class="col-md-6 text-center">
-                <img src="assets/img/logo nurul.png" alt="" width="250">
-                <h3 class="text-white">
-                    Sistem Absensi Siswa
-                    <br><b>Nurul Mustofa</b>
-                    <br><small>Rekayasa Perangkat Lunak <strong>(RPL)</strong></small>
-                </h3>
-            </div>
             <div class="col-md-6">
-                <div class="card shadow mb-4 mt-3">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Absensi Siswa</h6>
-                    </div>
-                    <!-- start card body -->
-                    <div class="card-body">
-                        <form action="" method="POST">
-                            <div class="form-row">
-                                <?php
-
-                                ?>
-                                <input type="hidden" name="tanggal" value="<?= $tgl; ?>">
-                                <div class="form-group col-md-6">
-                                    <label for="inputNisn">NISN</label>
-                                    <input type="text" name="nisn" class="form-control" id="inputNisn" placeholder="Masukkan NISN Anda" autocomplete="off" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputKelas">Kelas</label>
-                                    <input type="text" name="kelas" class="form-control" id="inputKelas" placeholder="Ex: 12 RPL 2" autocomplete="off" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputNamaSiswa">Nama Siswa</label>
-                                <input type="text" name="nama_siswa" class="form-control" id="inputNamaSiswa" placeholder="Input Nama Anda" autocomplete="off" required>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputNoAbsen">No Urut Absen</label>
-                                    <input type="text" name="no_urut_absen" class="form-control" id="inputNoAbsen" placeholder="Ex : 17" autocomplete="off" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">Jenis Kelamin</label>
-                                    <select id="inputState" class="form-control" name="jenis_kelamin">
-                                        <option selected>Choose...</option>
-                                        <option value="Laki - Laki">Laki - Laki</option>
-                                        <option value="Perempuan">Perempuan</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputMapel">Mapel</label>
-                                    <input type="text" name="mapel" class="form-control" id="inputMapel" placeholder="Ex : PWPB" autocomplete="off" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">Keterangan</label>
-                                    <select id="inputState" class="form-control" name="keterangan">
-                                        <option selected>Choose...</option>
-                                        <option value="Hadir">Hadir</option>
-                                        <option value="Izin">Izin</option>
-                                        <option value="Sakit">Sakit</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-                        </form>
-                    </div>
+                <div class="card">
+                    <form class="box" method="POST" action="ceklogin.php">
+                        <h1>Login</h1>
+                        <p class="text-muted"> Please enter your login and password!</p>
+                        <input type="text" name="username" placeholder="Username">
+                        <input type="password" name="password" placeholder="Password">
+                        <!-- <a class="forgot text-muted" href="#">Forgot password?</a> -->
+                        <input type="submit" name="login" value="Login!">
+                        <!-- <div class="col-md-12">
+                            <ul class="social-network social-circle">
+                                <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a></li>
+                            </ul>
+                        </div> -->
+                    </form>
                 </div>
             </div>
         </div>
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <form action="" method="POST" class="form-inline my-2 my-lg-0">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Absen Siswa | <?= date('d,m,Y'); ?></h6>
-                    <input type="text" class="form-control mr-sm-2 ml-auto" name="keyword" autofocus placeholder="Search">
-                    <input type="submit" value="Search" name="cari" class="btn btn-outline-success">
-                </form>
-            </div>
-            <div class="card-body">
-                <a href="rekapitulasi.php" class="btn btn-success mb-3"><i class="fa fa-table mr-1"></i>Rekapitulasi Data Siswa</a>
-                <a href="logout.php" class="btn btn-danger mb-3"><i class="fa fa-sign-out-alt mr-1"></i>Logout</a>
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Tanggal Dan Waktu</th>
-                                <th>NISN</th>
-                                <th>Nama Siswa</th>
-                                <th>Kelas</th>
-                                <th>Mapel</th>
-                                <th>No. Absen</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Ket</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // $tgl = date('Y-m-d'); //2021-07-16 
-                            ?>
-                            <?php foreach ($siswa as $s) : ?>
-                                <tr>
-                                    <th><?= $s['tanggal']; ?></th>
-                                    <th><?= $s['nisn']; ?></th>
-                                    <th><?= $s['nama_siswa']; ?></th>
-                                    <th><?= $s['kelas']; ?></th>
-                                    <th><?= $s['mapel']; ?></th>
-                                    <th><?= $s['no_urut_absen']; ?></th>
-                                    <th><?= $s['jenis_kelamin']; ?></th>
-                                    <th><?= $s['keterangan']; ?></th>
-                                    <th>
-                                        <a href="edit.php?id_absen=<?= $s['id_absen']; ?>" class="btn btn-warning btn-sm mb-2" data-toggle="tooltip" title="Edit Data"><i class="fas fa-edit fa-sm"></i></a><br>
-                                        <a href="hapus.php?id_absen=<?= $s['id_absen']; ?>" onclick="return confirm('Apakah anda Yakin Ingin Menghapus Data Ini....?')" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Hapus Data"><i class="fas fa-trash fa-md"></i></a>
-                                    </th>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Core plugin JavaScript-->
-    <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Custom Tooltip with js -->
-    <script src="assets/js/script.js"></script>
-
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
 </body>
 
 </html>
