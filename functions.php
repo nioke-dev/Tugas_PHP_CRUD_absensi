@@ -71,3 +71,18 @@ function edit($data)
 
     return mysqli_affected_rows($koneksi);
 }
+function cari($keyword)
+{
+    global $koneksi;
+    $query = "SELECT * FROM no_absen_17 WHERE
+                tanggal LIKE '%$keyword%' OR
+                nisn LIKE '%$keyword%' OR
+                nama_siswa LIKE '%$keyword%' OR
+                kelas LIKE '$keyword%' OR
+                mapel LIKE '%$keyword%' OR
+                no_urut_absen LIKE '%$keyword%' OR
+                jenis_kelamin LIKE '%$keyword%' OR
+                keterangan LIKE '%$keyword%'
+                ";
+    return query($query);
+}

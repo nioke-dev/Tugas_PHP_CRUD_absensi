@@ -1,6 +1,9 @@
 <?php
 require "functions.php";
 
+date_default_timezone_set('Asia/Jakarta');
+$tgl = date('Y-m-d H:i:s');
+
 $siswa = query("SELECT * FROM no_absen_17");
 
 if (isset($_POST['submit'])) {
@@ -16,6 +19,9 @@ if (isset($_POST['submit'])) {
             </script>";
         die;
     }
+}
+if (isset($_POST['cari'])) {
+    $siswa = cari($_POST['keyword']);
 }
 ?>
 <!DOCTYPE html>
@@ -64,8 +70,8 @@ if (isset($_POST['submit'])) {
                         <form action="" method="POST">
                             <div class="form-row">
                                 <?php
-                                date_default_timezone_set('Asia/Jakarta');
-                                $tgl = date('Y-m-d H:i:s'); ?>
+
+                                ?>
                                 <input type="hidden" name="tanggal" value="<?= $tgl; ?>">
                                 <div class="form-group col-md-6">
                                     <label for="inputNisn">NISN</label>
@@ -118,12 +124,15 @@ if (isset($_POST['submit'])) {
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Data Absen Siswa | <?= date('d,m,Y'); ?></h6>
+                <form action="" method="POST" class="form-inline my-2 my-lg-0">
+                    <h6 class="m-0 font-weight-bold text-primary">Data Absen Siswa | <?= date('d,m,Y'); ?></h6>
+                    <input type="text" class="form-control mr-sm-2 ml-auto" name="keyword" autofocus placeholder="Search">
+                    <input type="submit" value="Search" name="cari" class="btn btn-outline-success">
+                </form>
             </div>
             <div class="card-body">
-                <a href="rekapitulasi.php" class="btn btn-success mb-3"><i class="fa fa-table mr-1"></i>Rekapitulasi Pengunjung</a>
+                <a href="rekapitulasi.php" class="btn btn-success mb-3"><i class="fa fa-table mr-1"></i>Rekapitulasi Data Siswa</a>
                 <a href="logout.php" class="btn btn-danger mb-3"><i class="fa fa-sign-out-alt mr-1"></i>Logout</a>
-
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -141,7 +150,7 @@ if (isset($_POST['submit'])) {
                         </thead>
                         <tbody>
                             <?php
-                            $tgl = date('Y-m-d'); //2021-07-16 
+                            // $tgl = date('Y-m-d'); //2021-07-16 
                             ?>
                             <?php foreach ($siswa as $s) : ?>
                                 <tr>
