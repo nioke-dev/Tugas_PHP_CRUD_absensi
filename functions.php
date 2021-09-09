@@ -86,3 +86,21 @@ function cari($keyword)
                 ";
     return query($query);
 }
+function register($data)
+{
+    global $koneksi;
+
+    $first_name = htmlspecialchars(strip_tags($data['first_name']));
+    $last_name = htmlspecialchars(strip_tags($data['last_name']));
+    $username = htmlspecialchars(strip_tags($data['username']));
+    $password = htmlspecialchars(strip_tags($data['password']));
+    $birthday = htmlspecialchars(strip_tags($data['birthday']));
+    $gender = htmlspecialchars(strip_tags($data['sex']));
+    $email = htmlspecialchars(strip_tags($data['email']));
+    $phone = htmlspecialchars(strip_tags($data['phone']));
+
+    $query = "INSERT INTO user VALUES('','$username','$password','$first_name','$last_name','$birthday','$gender','$email','$phone')";
+
+    mysqli_query($koneksi, $query);
+    return mysqli_affected_rows($koneksi);
+}

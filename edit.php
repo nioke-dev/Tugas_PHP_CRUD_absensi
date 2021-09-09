@@ -3,6 +3,13 @@ require "functions.php";
 $id_absen = $_GET['id_absen'];
 $siswa = query("SELECT * FROM no_absen_17 WHERE id_absen=$id_absen")[0];
 
+if (isset($_POST['kembali'])) {
+    echo "<script>
+                alert('anda yakin?');
+                document.location.href='table.php';
+        </script>";
+}
+
 if (isset($_POST['edit'])) {
     if (edit($_POST) > 0) {
         echo "<script>
@@ -92,6 +99,7 @@ if (isset($_POST['edit'])) {
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary" name="edit">Edit Data</button>
+                            <button type="submit" class="btn btn-danger" name="kembali">Kembali</button>
                         </form>
                     </div>
                 </div>
