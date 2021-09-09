@@ -7,7 +7,7 @@ if (isset($_POST['edit'])) {
     if (edit($_POST) > 0) {
         echo "<script>
                 alert('data berhasil di Update!');
-                document.location.href='index.php';
+                document.location.href='table.php';
         </script>";
     } else {
         echo "<script>
@@ -16,8 +16,6 @@ if (isset($_POST['edit'])) {
             </script>";
     }
 }
-
-
 ?>
 <!doctype html>
 <html lang="en">
